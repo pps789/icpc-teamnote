@@ -1,42 +1,43 @@
-void fft(int sign, int n, double *real, double *imag) {
-    double theta = sign * 2 * pi / n;
-    for (int m = n; m >= 2; m >>= 1, theta *= 2) {
-        double wr = 1, wi = 0, c = cos(theta), s = sin(theta);
-        for (int i = 0, mh = m >> 1; i < mh; ++i) {
-            for (int j = i; j < n; j += m) {
-                int k = j + mh;
-                double xr = real[j] - real[k], xi = imag[j] - imag[k];
-                real[j] += real[k], imag[j] += imag[k];
-                real[k] = wr * xr - wi * xi, imag[k] = wr * xi + wi * xr;
+const double PI = 3.14159265358979323846;
+
+void fft(complex<double> *a, int N, bool f) {
+    complex<double> x, y, z;
+    for (int i = 1, j = 0; i < N; i++) {
+        for (int k = N >> 1; j >= k; k >>= 1) j -= k;
+        j += k;
+        if (i < j) swap(a[i], a[j]);
+    }
+    for (int i = 1; i < N; i <<= 1) {
+        double w = f ? -PI / i : PI / i;
+        complex<double> x{ cos(w), sin(w) };
+        for (int j = 0; j < N; j += i << 1) {
+            complex<double> y = 1;
+            for (int k = 0; k < i; k++) {
+                z = a[i + j + k] * y;
+                a[i + j + k] = a[j + k] - z;
+                a[j + k] += z;
+                y *= x;
             }
-            double _wr = wr * c - wi * s, _wi = wr * s + wi * c;
-            wr = _wr, wi = _wi;
         }
     }
-    for (int i = 1, j = 0; i < n; ++i) {
-        for (int k = n >> 1; k > (j ^= k); k >>= 1);
-        if (j < i) swap(real[i], real[j]), swap(imag[i], imag[j]);
-    }
+    if (f) for (int i = 0; i < N; i++) a[i] /= N;
 }
+
 // Compute Poly(a)*Poly(b), write to r; Indexed from 0
 // O(n*logn)
 int mult(int *a, int n, int *b, int m, int *r) {
-    const int maxn = 100;
-    static double ra[maxn], rb[maxn], ia[maxn], ib[maxn];
+    const int MAXN = 1048576;
+    static complex<double> A[MAXN], B[MAXN];
     int fn = 1;
     while (fn < n + m) fn <<= 1; // n + m: interested length
-    for (int i = 0; i < n; ++i) ra[i] = a[i], ia[i] = 0;
-    for (int i = n; i < fn; ++i) ra[i] = ia[i] = 0;
-    for (int i = 0; i < m; ++i) rb[i] = b[i], ib[i] = 0;
-    for (int i = m; i < fn; ++i) rb[i] = ib[i] = 0;
-    fft(1, fn, ra, ia);
-    fft(1, fn, rb, ib);
-    for (int i = 0; i < fn; ++i) {
-        double real = ra[i] * rb[i] - ia[i] * ib[i];
-        double imag = ra[i] * ib[i] + rb[i] * ia[i];
-        ra[i] = real, ia[i] = imag;
-    }
-    fft(-1, fn, ra, ia);
-    for (int i = 0; i < fn; ++i) r[i] = (int)floor(ra[i] / fn + 0.5);
+    for (int i = 0; i < n; i++) A[i] = a[i];
+    for (int i = n; i < fn; i++) A[i] = 0;
+    for (int i = 0; i < m; i++) B[i] = b[i];
+    for (int i = m; i < fn; i++) B[i] = 0;
+    fft(A, fn, false);
+    fft(B, fn, false);
+    for (int i = 0; i < fn; ++i) A[i] *= B[i];
+    fft(A, fn, true);
+    for (int i = 0; i < fn; ++i) r[i] = (int)round(A[i].real());
     return fn;
 }
