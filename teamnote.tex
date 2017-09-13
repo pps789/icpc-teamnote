@@ -139,6 +139,26 @@ $L$에서 행과 열을 하나씩 제거한 것을 $L'$라 하자. 어느 행/�
 \subsection{Fast Fourier Transform}
 \lstinputlisting[style=mycpp]{src/math/fft.cpp}
 
+\subsection{Number Theoretic FFT}
+
+$p = a \cdot 2^b + 1$꼴의 소수 $p$와 $p$의 원시근 $x$에 대하여, $n \leq b$를 만족하는
+모든 $2^n$ 크기의 배열에 대해 법 $p$로 FFT를 행할 수 있다.
+다음은 위를 만족하는 충분히 큰 소수들 목록이다.
+
+\newpage
+
+\begin{table}[]
+\begin{tabular}{llll}
+$p$ & $a$ & $b$ & 원시근 \\
+$3221225473$ & $3$ & $30$ & $5$ \\
+$2281701377$ & $17$ & $27$ & $3$ \\
+$2013265921$ & $15$ & $27$ & $31$ \\
+$469762049$ & $37$ & $26$ & $3$
+\end{tabular}
+\end{table}
+
+\lstinputlisting[style=mycpp]{src/math/ntt.cpp}
+
 \subsection{Matrix Operations}
 \lstinputlisting[style=mycpp]{src/math/matrix-operations.cpp}
 
