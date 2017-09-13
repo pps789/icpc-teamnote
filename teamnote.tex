@@ -50,6 +50,13 @@
   stringstyle=\color{orange},
 }
 
+\lstdefinestyle{myjava}{
+  language=Java,
+  keywordstyle=\color{blue},
+  commentstyle=\itshape\color{purple!40!black},
+  stringstyle=\color{orange},
+}
+
 \begin{document}
 \tableofcontents
 
@@ -386,7 +393,7 @@ $A = i + \frac{b}{2} - 1$
 
 
 \subsection{Java Examples}
-\lstinputlisting{src/miscellaneous/example.java}
+\lstinputlisting[style=myjava]{src/miscellaneous/example.java}
 
 
 \subsection{체계적인 접근을 위한 질문들}
