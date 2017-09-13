@@ -21,7 +21,7 @@ void fft(int *a, int N, bool f) {
         for (int j = 0; j < N; j += i << 1) {
             int y = 1;
             for (int k = 0; k < i; k++) {
-                z = a[i + j + k] * 1ll * y % P;
+                int z = a[i + j + k] * 1ll * y % P;
                 a[i + j + k] = a[j + k] - z;
                 if (a[i + j + k] < P) a[i + j + k] += P;
                 a[j + k] += z;
