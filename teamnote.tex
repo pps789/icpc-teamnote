@@ -155,14 +155,17 @@ $p = a \cdot 2^b + 1$꼴의 소수 $p$와 $p$의 원시근 $x$에 대하여, $n 
 \newpage
 
 \begin{table}[]
-\begin{tabular}{llll}
-$p$ & $a$ & $b$ & 원시근 \\
-$3221225473$ & $3$ & $30$ & $5$ \\
-$2281701377$ & $17$ & $27$ & $3$ \\
-$2013265921$ & $15$ & $27$ & $31$ \\
-$469762049$ & $37$ & $26$ & $3$
+\begin{tabular}{llllll}
+$p$ & $a$ & $b$ & 원시근 & 덧셈 & 곱셈 \\
+$3221225473$ & $3$ & $30$ & $5$ & 64-bit signed & 64-bit unsigned \\
+$2281701377$ & $17$ & $27$ & $3$ & 64-bit signed & 64-bit signed \\
+$2013265921$ & $15$ & $27$ & $31$ & 32-bit unsigned & 64-bit signed \\
+$998244353$ & $119$ & $23$ & $3$ & 32-bit signed & 64-bit signed \\
+$469762049$ & $7$ & $26$ & $3$ & 32-bit signed & 64-bit signed \\
 \end{tabular}
 \end{table}
+
+NTT 사용 시에 자료형에 유의하여, 덧셈 혹은 곱셈에서 Integer overflow가 나지 않도록 하라.
 
 \lstinputlisting[style=mycpp]{src/math/ntt.cpp}
 
