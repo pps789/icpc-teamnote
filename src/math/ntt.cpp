@@ -12,8 +12,7 @@ int Pow(int x, int y) {
 
 void fft(int *a, int N, bool f) {
     for (int i = 1, j = 0; i < N; i++) {
-        int k;
-        for (k = N >> 1; j >= k; k >>= 1) j -= k;
+        int k; for (k = N >> 1; j >= k; k >>= 1) j -= k;
         j += k; if (i < j) swap(a[i], a[j]);
     }
     for (int i = 1; i < N; i <<= 1) {
@@ -29,9 +28,5 @@ void fft(int *a, int N, bool f) {
                 y = y * 1ll * x % P;
             }
         }
-    }
-    if (f) {
-        int j = Pow(N, P - 2);
-        for (int i = 0; i < N; i++) a[i] = a[i] * 1ll * j % P;
     }
 }
