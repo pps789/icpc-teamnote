@@ -1,14 +1,13 @@
-package fio;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-public class fio
+static class fio
 {
-	final private int BSIZE=524288;
+    final private int BSIZE=524288;
     private byte[] buffer = new byte[BSIZE];
     private int p = BSIZE;
     private InputStream in;
+    public fio()
+    {
+        in=System.in;
+    }
     public byte readByte() throws IOException
     {
         if(p==BSIZE)
@@ -30,6 +29,6 @@ public class fio
           ret = ret * 10 + b - '0';
           b = readByte();
         }
-        return neg?-ret:ret;
+        return neg ? -ret : ret;
     }
 }
