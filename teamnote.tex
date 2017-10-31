@@ -169,6 +169,14 @@ NTT 사용 시에 자료형에 유의하여, 덧셈 혹은 곱셈에서 Integer 
 
 \lstinputlisting[style=mycpp]{src/math/ntt.cpp}
 
+\subsection{FFT with AVX}
+
+실수 배열에 대하여 convolution을 FFT 한 번, Inverse FFT 한 번으로 계산할 수 있다.
+새로운 배열 $a + bi$를 정의하자. 이 배열의 자기 자신과의 convolution의 허수부는
+$a$와 $b$의 convolution의 2배와 같다.
+
+\lstinputlisting[style=mycpp]{src/math/fft-avx.cpp}
+
 \subsection{Matrix Operations}
 \lstinputlisting[style=mycpp]{src/math/matrix-operations.cpp}
 
