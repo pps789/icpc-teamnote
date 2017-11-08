@@ -17,20 +17,6 @@ class example
         }
         return buffer[p++];
     }
-    static int readInt()
-    {
-        byte b = readByte();
-        while ((b < '0' || b > '9') && b != '-') {
-            b = readByte();
-        }
-        int ret = 0; boolean neg = b == '-';
-        if (neg) b = readByte();
-        while (b >= '0' && b <= '9') {
-            ret = ret * 10 + b - '0';
-            b = readByte();
-        }
-        return neg ? -ret : ret;
-    }
     public static void main(String[] args)
     {
         Scanner in = new Scanner(System.in);
