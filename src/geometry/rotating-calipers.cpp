@@ -15,18 +15,10 @@ void antipodal_pairs(vector<Point>& pt) {
 
     for (int i = 0, j = (int)lo.size() - 1; i + 1 < up.size() || j > 0; ) {
         get_pair(up[i], lo[j]);  // DO WHAT YOU WANT
-        if (i + 1 == up.size()) {
-            --j;
-        }
-        else if (j == 0) {
-            ++i;
-        }
+        if (i + 1 == up.size()) --j;
+        else if (j == 0) ++i;
         else if ((long long)(up[i + 1].y - up[i].y) * (lo[j].x - lo[j - 1].x)
-                > (long long)(up[i + 1].x - up[i].x) * (lo[j].y - lo[j - 1].y)) {
-            ++i;
-        }
-        else {
-            --j;
-        }
+            > (long long)(up[i + 1].x - up[i].x) * (lo[j].y - lo[j - 1].y)) ++i;
+        else --j;
     }
 }
