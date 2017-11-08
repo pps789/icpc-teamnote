@@ -1,32 +1,6 @@
 typedef long long ll;
 typedef unsigned long long ull;
 
-// calculate lg2(a)
-inline int lg2(ll a) {
-    return 63 - __builtin_clzll(a);
-}
-
-// calculate the number of 1-bits
-inline int bitcount(ll a) {
-    return __builtin_popcountll(a);
-}
-
-// calculate ceil(a/b)
-// |a|, |b| <= (2^63)-1 (does not dover -2^63)
-ll ceildiv(ll a, ll b) {
-    if (b < 0) return ceildiv(-a, -b);
-    if (a < 0) return (-a) / b;
-    return ((ull)a + (ull)b - 1ull) / b;
-}
-
-// calculate floor(a/b)
-// |a|, |b| <= (2^63)-1 (does not cover -2^63)
-ll floordiv(ll a, ll b) {
-    if (b < 0) return floordiv(-a, -b);
-    if (a >= 0) return a / b;
-    return -(ll)(((ull)(-a) + b - 1) / b);
-}
-
 // calculate a*b % m
 // x86-64 only
 ll large_mod_mul(ll a, ll b, ll m) {
@@ -39,9 +13,12 @@ ll large_mod_mul(ll a, ll b, ll m) {
 ll large_mod_mul(ll a, ll b, ll m) {
     a %= m; b %= m; ll r = 0, v = a;
     while (b) {
-        if (b&1) r = (r + v) % m;
+        if (b & 1) {
+            r = r + v;
+            if (r >= m) r -= m;
+        }
         b >>= 1;
-        v = (v << 1) % m;
+        v <<= 1; if (v >= m) v -= m;
     }
     return r;
 }
