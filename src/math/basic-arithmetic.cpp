@@ -1,6 +1,3 @@
-typedef long long ll;
-typedef unsigned long long ull;
-
 // calculate a*b % m
 // x86-64 only
 ll large_mod_mul(ll a, ll b, ll m) {
@@ -33,11 +30,6 @@ ll modpow(ll n, ll k, ll m) {
         k /= 2;
     }
     return ret;
-}
-
-// calculate gcd(a, b)
-ll gcd(ll a, ll b) {
-    return b == 0 ? a : gcd(b, a % b);
 }
 
 // find a pair (c, d) s.t. ac + bd = gcd(a, b)
