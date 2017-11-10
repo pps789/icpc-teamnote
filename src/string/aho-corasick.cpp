@@ -1,8 +1,3 @@
-#include <algorithm>
-#include <vector>
-#include <queue>
-using namespace std;
-
 struct AhoCorasick
 {
     const int alphabet;
